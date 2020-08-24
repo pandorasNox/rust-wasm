@@ -1,0 +1,126 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello wasm-pack!</title>
+  </head>
+  <body>
+    <script src="./test.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World - Rust</title>
+    <script type="module" src="./index.js"></script>
+    <!-- <script type="text/javascript" src="./index.js"></script> -->
+  </head>
+  <body></body>
+</html>
+
+<!-- <!doctype html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>WASM test with XHR</title>
+  </head>
+
+  <body>
+    <script>
+      var importObject = {
+        imports: {
+          imported_func: function(arg) {
+            console.log(arg);
+          }
+        }
+      };
+
+    //   request = new XMLHttpRequest();
+    // //   request.open('GET', 'simple.wasm');
+    //   request.open('GET', './test_bg.wasm');
+    //   request.responseType = 'arraybuffer';
+    //   request.send();
+
+    //   request.onload = function() {
+    //     var bytes = request.response;
+    //     WebAssembly.instantiate(bytes, importObject).then(function(obj) {
+    //       obj.instance.exports.exported_func();
+    //     });
+    //   };
+
+    WebAssembly.instantiateStreaming(fetch('test_bg.wasm'), importObject)
+    .then(obj => {
+        // Call an exported function:
+        // obj.instance.exports.exported_func();
+        console.log(obj.instance.exports.exported_func())
+        // or access the buffer contents of an exported memory:
+        var i32 = new Uint32Array(obj.instance.exports.memory.buffer);
+        console.log(i32)
+        // or access the elements of an exported table:
+        // var table = obj.instance.exports.table;
+        // console.log(table.get(0)());
+        var greet = obj.instance.exports.greet;
+        greet()
+    })
+
+    </script>
+  </body>
+
+</html> -->
+
+<!-- <html>
+<head>
+  <script>
+    // Check for wasm support.
+    if (!('WebAssembly' in window)) {
+      alert('you need a browser with wasm support enabled :(');
+    }
+    // Loads a WebAssembly dynamic library, returns a promise.
+    // imports is an optional imports object
+    function loadWebAssembly(filename, imports) {
+      // Fetch the file and compile it
+      return fetch(filename)
+        .then(response => response.arrayBuffer())
+        .then(buffer => WebAssembly.compile(buffer))
+        .then(module => {
+          // Create the imports for the module, including the
+          // standard dynamic library imports
+          imports = imports || {};
+          imports.env = imports.env || {};
+          imports.env.memoryBase = imports.env.memoryBase || 0;
+          imports.env.tableBase = imports.env.tableBase || 0;
+          if (!imports.env.memory) {
+            imports.env.memory = new WebAssembly.Memory({ initial: 256 });
+          }
+          if (!imports.env.table) {
+            imports.env.table = new WebAssembly.Table({ initial: 0, element: 'anyfunc' });
+          }
+          // Create the instance.
+          return new WebAssembly.Instance(module, imports);
+        });
+    }
+    // Main part of this example, loads the module and uses it.
+    loadWebAssembly('hello_world.wasm')
+      .then(instance => {
+        var exports = instance.exports; // the exports of that instance
+        var doubler = exports.greet; // the "doubler" function (note "_" prefix)
+        // now we are ready, set up the button so the user can run the code
+        var button = document.getElementById('run');
+        button.value = 'Call a method in the WebAssembly module';
+        button.addEventListener('click', function() {
+          var input = 21;
+        //   alert(input + ' doubled is ' + doubler() );
+          doubler()
+        }, false);
+      }
+    );
+  </script>
+</head>
+<body>
+  <input type="button" id="run" value="(waiting for WebAssembly)"/>
+</body>
+</html> -->
